@@ -10,10 +10,7 @@ DIST_FILES=		   \
 	assets/mlx-i2c-stick-overview.png   \
 	index.html              \
 	interface.css           \
-	interface.js            \
-	mlx-i2c-stick.html      \
-	firmware.html           \
-	products.html        
+	interface.js
 
 PANDOC_FILES=               \
 	products                \
@@ -27,7 +24,8 @@ all: ${DIST_FILES} dist
 
 clean:
 	@rm -rfv ${DIST_DIR}
-	@rm -f $(patsubst %, %.html, ${PANDOC_FILES})
+	@rm -fv $(patsubst %, %.html, ${PANDOC_FILES})
+	@rm -fv index.html
 
 dist:
 	@mkdir -p ${DIST_DIR}/assets/site
@@ -47,6 +45,9 @@ firmware.html: firmware.md firmware_list.md
 	@echo "pandoc $^ => $@"	
 	@cat $^ | pandoc -f markdown+lists_without_preceding_blankline+autolink_bare_uris+hard_line_breaks+smart --mathjax -o $@
 
+index.html: firmware.html mlx-i2c-stick.html products.html context.yml
+	@echo "mailmerge $^ => $@"	
+	@python mailmerge.py
 
 serve:
 	python -m http.server
