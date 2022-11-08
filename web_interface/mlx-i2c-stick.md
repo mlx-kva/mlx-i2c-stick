@@ -6,7 +6,7 @@ copyright: 'Melexis'
 ## Introduction
 
 Yet another I2C interface...  
-However our `mlx-i2c-stick` aims to:  
+However `mlx-i2c-stick` aims to:  
 - Provide a low cost interface towards our 3.3V supplied sensors who uses the I2C communication bus.
 - Use as much as possbile off-the-shelf available material/modules.
 - Create a friction free getting starting experience. 
@@ -15,7 +15,7 @@ However our `mlx-i2c-stick` aims to:
 
 ## What is mlx-i2c-stick?
 
-Microcontroller on one hand a USB CDC UART and on the other a I2C master at 3.3V.  
+A microcontroller with on one hand a USB CDC UART and on the other a I2C master at 3.3V.  
 We provide open source firmware and an userinterface to easily get started with our I2C/3.3V based sensors.
 ![](assets/mlx-i2c-stick-overview.png)
 
@@ -54,7 +54,7 @@ PCB:
 
 ## Disclaimer
 
-<div class="text-light">
+<div class="text-light text-small">
 
 The content of this document is believed to be correct and accurate. However, the content of this document is furnished "as is" for informational use only and no representation, nor warranty is provided by Melexis about its accuracy, nor about the results of its implementation. Melexis assumes no responsibility or liability for any errors or inaccuracies that may appear in this document. Customer will follow the practices contained in this document under its sole responsibility. This documentation is in fact provided without warranty, term, or condition of any kind, either implied or expressed, including but not limited to warranties of merchantability, satisfactory quality, non-infringement, and fitness for purpose. Melexis, its employees and agents and its affiliates' and their employees and agents will not be responsible for any loss, however arising, from the use of, or reliance on this document.
 This document is subject to change without notice, and should not be construed as a commitment by Melexis. Therefore, before placing orders or prior to designing the product into a system, users or any third party should obtain the latest version of the relevant information.

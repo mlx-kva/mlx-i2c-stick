@@ -10,9 +10,13 @@
   --font-color: #00354B; /* mlx royal blue */
 
   --font-size: 1.6rem;
-  --font-family-sans: sans-serif;
+  --font-family-sans: Lato,Helvetica,Arial,sans-serif;
   --font-family-mono: monaco, "Consolas", "Lucida Console", monospace;
 
+}
+
+body{
+  font-weight: lighter;
 }
 
 .nav {
@@ -23,8 +27,14 @@
   width: 100%; /* Full width */
 }
 
+.nav .active:not(.button) {
+  color: white;
+  filter: brightness(100%);
+  font-weight: bold;
+}
+
 div.tabs > a:not(.active) {
-	color: var(--color-primary);
+	color: white;
 	filter: brightness(70%);
 }
 
@@ -91,6 +101,11 @@ nav.tabs {
 
 nav.tabs>a.active {
   background-color: var(--color-primary);
+}
+
+div.text-small
+{
+  font-size: 10px;
 }
 
 div.my_col
