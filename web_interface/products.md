@@ -18,5 +18,6 @@ As stated in the `mlx-i2c-stick` introduction, here we focus on our 3.3V supplie
 
 - MLX90393`!` -> https://melexis.com/mlx90393
 - MLX90395`!` -> https://melexis.com/mlx90395
+- MLX90397`!` -> https://melexis.com/mlx90397
 
 `!`: not yet supported by mlx-i2c-stick firmware V1.1.0
