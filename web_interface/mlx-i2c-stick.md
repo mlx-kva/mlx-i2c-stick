@@ -17,7 +17,7 @@ However `mlx-i2c-stick` aims to:
 
 A microcontroller with on one hand a USB CDC UART and on the other a I2C master at 3.3V.  
 We provide open source firmware and an userinterface to easily get started with our I2C/3.3V based sensors.
-![](assets/mlx-i2c-stick-overview.webp)
+![mlx-i2c-stick overview](assets/mlx-i2c-stick-overview.webp)
 
 ## Getting started
 
