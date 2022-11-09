@@ -9,6 +9,7 @@ DIST_FILES=		   \
 	assets/site/logo_white.png          \
 	assets/site/lato_*.woff2            \
 	assets/mlx-i2c-stick-overview.png   \
+	google*.html            \
 	index.html              \
 	interface.css           \
 	interface.js
