@@ -45,7 +45,7 @@ firmware.html: firmware.md firmware_list.md
 	@echo "pandoc $^ => $@"	
 	@cat $^ | pandoc -f markdown+lists_without_preceding_blankline+autolink_bare_uris+hard_line_breaks+smart --mathjax -o $@
 
-index.html: firmware.html mlx-i2c-stick.html products.html context.yml
+index.html: index.jinja2.html firmware.html mlx-i2c-stick.html products.html context.yml
 	@echo "mailmerge $^ => $@"	
 	@python mailmerge.py
 

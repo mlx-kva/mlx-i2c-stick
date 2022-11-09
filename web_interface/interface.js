@@ -165,6 +165,9 @@ $(document).ready(function () {
   $("#serial_send").text("");
   $("#serial_send").prop('disabled', true); // disable input entry!
   $("div#main button.button").prop('disabled', true); // disable input entry!
+  $("button.button.cmd").click(function () {
+    button_action(this);
+  });
   if (!("serial" in navigator)) {
     // The Web Serial API is NOT supported.
     $('button').prop('disabled', true); // disable all buttons!
@@ -185,6 +188,9 @@ $(document).ready(function () {
   }
   has_serial = true;
   $("#lbl_selected_port").text(selected_port.usbVendorId + '/' + selected_port.usbProductId);
+
+
+
 
   div = document.querySelector('#receive_data');
 
@@ -732,16 +738,34 @@ $(document).ready(function () {
       new_div = $($(".slave_transient_chart").html()).attr("data-sa", sa);
       new_div.children("#btn_config").text("@"+sa+":"+device);
       new_div.children("#slave_enable").prop('checked', disabled ? false : true);
+      new_div.children("button.button.cmd").click(function () {
+        button_action(this);
+      });
+      new_div.children("input.slave_enable").change(function () {
+        checkbox_slave_enable(this);
+      });
       new_div.appendTo("#transient_chart_slaves");
 
       new_div = $($(".slave_spatial_chart").html()).attr("data-sa", sa);
       new_div.children("#btn_config").text("@"+sa+":"+device);
       new_div.children("#slave_enable").prop('checked', disabled ? false : true);
+      new_div.children("button.button.cmd").click(function () {
+        button_action(this);
+      });
+      new_div.children("input.slave_enable").change(function () {
+        checkbox_slave_enable(this);
+      });
       new_div.appendTo("#spatial_chart_slaves");
 
       new_div = $($(".slave_terminal").html()).attr("data-sa", sa);
       new_div.children("#btn_config").text("@"+sa+":"+device);
       new_div.children("#slave_enable").prop('checked', disabled ? false : true);
+      new_div.children("button.button.cmd").click(function () {
+        button_action(this);
+      });
+      new_div.children("input.slave_enable").change(function () {
+        checkbox_slave_enable(this);
+      });
       new_div.appendTo("#terminal_slaves");
     }
 
