@@ -8,7 +8,7 @@ DIST_FILES=		   \
 	assets/site/jquery-3.6.1.min.js     \
 	assets/site/logo_white.png          \
 	assets/site/lato_*.woff2            \
-	assets/mlx-i2c-stick-overview.png   \
+	assets/mlx-i2c-stick-overview.webp  \
 	google*.html            \
 	index.html              \
 	interface.css           \
