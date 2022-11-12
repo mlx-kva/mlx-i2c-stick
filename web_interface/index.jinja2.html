@@ -111,26 +111,34 @@ Events in Javascript: https://developer.mozilla.org/en-US/docs/Web/Events/Creati
 
           <div class="buttons">
             <div class="row">
-              <button id="btn_help" data-cmd="?" title="Help" class="button cmd">Help</button>
-              <button id="btn_scan" data-cmd="scan" title="Scan the I2C bus for slave sensors" class="button cmd">Scan</button>
-              <button id="btn_continuous"  data-cmd=";" title="Continuous acquisition" class="button cmd">Start</button>
-              <button id="btn_interactive" data-cmd="!" title="Interactive acquisition" class="button cmd">Stop</button>
+              <fieldset class="sidebar">
+                <legend>Control buttons</legend>
+                <button id="btn_help" data-cmd="?" title="Help" class="button cmd">Help</button>
+                <button id="btn_scan" data-cmd="scan" title="Scan the I2C bus for slave sensors" class="button cmd">Scan</button>
+                <button id="btn_continuous"  data-cmd=";" title="Continuous acquisition" class="button cmd">Start</button>
+                <button id="btn_interactive" data-cmd="!" title="Interactive acquisition" class="button cmd">Stop</button>
+              </fieldset>
             </div>
-            <div id="terminal_slaves" class="slaves">
-              No slaves found; connect slaves and click `scan` button
+            <div class="row">
+              <fieldset class="sidebar">
+                <legend>I2C Slaves</legend>
+                <div id="terminal_slaves" class="slaves">
+                  No slaves found; connect slaves and click `scan` button
+                </div>
+              </fieldset>
             </div>
           </div>
         </div>        
       </div>
 
       <div id="tab_int_transient" class="my_tab row active">
-        <div class="my_col col-10">
+        <div class="my_col col-9">
           <div id="div_transient_chart" style="display: inline-block; position: relative; width: 100%; height: 400px;">
             <canvas id="transient_chart">Your browser does not support the HTML5 canvas tag.</canvas>
           </div>        
         </div>
 
-        <div class="my_col col-2">
+        <div class="my_col col-3">
           <div class="checkboxes">
             <input type="checkbox" id="chk_transient_enable" name="chk_transient_enable" value="chk_transient_enable" checked=false class="checkmark default_off">
               <label for="chk_transient_enable">Enable chart</label>
@@ -146,25 +154,33 @@ Events in Javascript: https://developer.mozilla.org/en-US/docs/Web/Events/Creati
           </div>
           <div class="buttons">
             <div class="row">
-              <button id="btn_scan" data-cmd="scan" title="Scan the I2C bus for slave sensors" class="button cmd">Scan</button>
-              <button id="btn_continuous" data-cmd=";" title="Continuous acquisition" class="button cmd">Start</button>
-              <button id="btn_interactive" data-cmd="!" title="Interactive acquisition" class="button cmd">Stop</button>
+              <fieldset class="sidebar">
+                <legend>Control buttons</legend>
+                <button id="btn_scan" data-cmd="scan" title="Scan the I2C bus for slave sensors" class="button cmd">Scan</button>
+                <button id="btn_continuous" data-cmd=";" title="Continuous acquisition" class="button cmd">Start</button>
+                <button id="btn_interactive" data-cmd="!" title="Interactive acquisition" class="button cmd">Stop</button>
+              </fieldset>
             </div>
-            <div id="transient_chart_slaves" class="slaves">
-              No slaves found; connect slaves and click `scan` button
+            <div class="row">
+              <fieldset class="sidebar">
+                <legend>I2C Slaves</legend>
+                <div id="transient_chart_slaves" class="slaves">
+                  No slaves found; connect slaves and click `scan` button
+                </div>
+              </fieldset>
             </div>
           </div>
         </div>
       </div>
 
       <div id="tab_int_spatial" class="my_tab row">
-        <div class="my_col col-10">
+        <div class="my_col col-9">
           <div id="div_spatial_chart" style="display: inline-block; position: relative; width: 100%; height: 400px;">
             <canvas id="spatial_chart" style="border:1px solid #d3d3d3; aspect-ratio: auto;">Your browser does not support the HTML5 canvas tag.</canvas>
           </div>        
         </div>
 
-        <div class="my_col col-2">
+        <div class="my_col col-3">
           <div class="checkboxes">
             <input type="checkbox" id="chk_spatial_enable" name="chk_spatial_enable" value="chk_spatial_enable" checked=false class="checkmark default_off">
               <label for="chk_spatial_enable">Enable chart</label>
@@ -198,12 +214,20 @@ Events in Javascript: https://developer.mozilla.org/en-US/docs/Web/Events/Creati
           </div>
           <div class="buttons">
             <div class="row">
-              <button id="btn_scan" data-cmd="scan" title="Scan the I2C bus for slave sensors" class="button cmd">Scan</button>
-              <button id="btn_continuous" data-cmd=";" title="Continuous acquisition" class="button cmd">Start</button>
-              <button id="btn_interactive" data-cmd="!" title="Interactive acquisition" class="button cmd">Stop</button>
+              <fieldset class="sidebar">
+                <legend>Control buttons</legend>
+                <button id="btn_scan" data-cmd="scan" title="Scan the I2C bus for slave sensors" class="button cmd">Scan</button>
+                <button id="btn_continuous" data-cmd=";" title="Continuous acquisition" class="button cmd">Start</button>
+                <button id="btn_interactive" data-cmd="!" title="Interactive acquisition" class="button cmd">Stop</button>
+              </fieldset>
             </div>
-            <div id="spatial_chart_slaves" class="slaves">
-              No slaves found; connect slaves and click `scan` button
+            <div class="row">
+              <fieldset class="sidebar">
+                <legend>I2C Slaves</legend>
+                <div id="spatial_chart_slaves" class="slaves">
+                  No slaves found; connect slaves and click `scan` button
+                </div>
+              </fieldset>
             </div>
           </div>
         </div>

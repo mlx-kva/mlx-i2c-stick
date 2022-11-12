@@ -198,3 +198,6 @@ div.slaves>input.checkmark{
   margin-bottom: 15px;
 }
 
+fieldset.sidebar{
+  width: 100%;
+}
