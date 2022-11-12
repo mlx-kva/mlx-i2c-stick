@@ -26,7 +26,6 @@ var receive_buffer = "";
 var t_min = 15;
 var t_max = 35;
 var spatial_previous_orientation = 0;
-var sent_timer;
 
 var connected_slaves = {};
 let heat_map_gradient_colors = null;
@@ -141,18 +140,6 @@ function get_pixel_value(img_dat, x,y, result = []){
 
 function sent_command(command)
 {
-  if (sent_timer === undefined)
-  {
-    sent_timer = 0;
-  }
-  let now = new Date();
-  if ((now - sent_timer) < 50)
-  {
-    // too fast, do nothing.
-    return;
-  }
-
-  sent_timer = now;
   const sent_event = new CustomEvent('sent', { detail: command });
   div = document.querySelector('#sent_data');
   div.dispatchEvent(sent_event);  
@@ -165,7 +152,7 @@ $(document).ready(function () {
   $("#serial_send").text("");
   $("#serial_send").prop('disabled', true); // disable input entry!
   $("div#main button.button").prop('disabled', true); // disable input entry!
-  $("button.button.cmd").click(function () {
+  $("button.button.cmd").one('click', function () {
     button_action(this);
   });
   if (!("serial" in navigator)) {
@@ -307,7 +294,7 @@ $(document).ready(function () {
         if (!(sa in connected_slaves))
         {
           sent_command("ls\n");
-          sleep(100).then(() => {
+          sleep(10).then(() => {
             sent_command("cs:"+sa+"\n");
           });
 
@@ -317,7 +304,7 @@ $(document).ready(function () {
         if (!('device' in connected_slaves[sa]))
         {
           sent_command("ls\n");
-          sleep(100).then(() => {
+          sleep(10).then(() => {
             sent_command("cs:"+sa+"\n");
           });
           return;
@@ -497,7 +484,7 @@ $(document).ready(function () {
         if (!(sa in connected_slaves))
         {
           sent_command("ls\n");
-          sleep(100).then(() => {
+          sleep(10).then(() => {
             sent_command("cs:"+sa+"\n");
           });
           return;
@@ -505,7 +492,7 @@ $(document).ready(function () {
         if (!('device' in connected_slaves[sa]))
         {
           sent_command("ls\n");
-          sleep(100).then(() => {
+          sleep(10).then(() => {
             sent_command("cs:"+sa+"\n");
           });
           return;
@@ -738,7 +725,7 @@ $(document).ready(function () {
       new_div = $($(".slave_transient_chart").html()).attr("data-sa", sa);
       new_div.children("#btn_config").text("@"+sa+":"+device);
       new_div.children("#slave_enable").prop('checked', disabled ? false : true);
-      new_div.children("button.button.cmd").click(function () {
+      new_div.children("button.button.cmd").one('click', function () {
         button_action(this);
       });
       new_div.children("input.slave_enable").change(function () {
@@ -749,7 +736,7 @@ $(document).ready(function () {
       new_div = $($(".slave_spatial_chart").html()).attr("data-sa", sa);
       new_div.children("#btn_config").text("@"+sa+":"+device);
       new_div.children("#slave_enable").prop('checked', disabled ? false : true);
-      new_div.children("button.button.cmd").click(function () {
+      new_div.children("button.button.cmd").one('click', function () {
         button_action(this);
       });
       new_div.children("input.slave_enable").change(function () {
@@ -760,7 +747,7 @@ $(document).ready(function () {
       new_div = $($(".slave_terminal").html()).attr("data-sa", sa);
       new_div.children("#btn_config").text("@"+sa+":"+device);
       new_div.children("#slave_enable").prop('checked', disabled ? false : true);
-      new_div.children("button.button.cmd").click(function () {
+      new_div.children("button.button.cmd").one('click', function () {
         button_action(this);
       });
       new_div.children("input.slave_enable").change(function () {
@@ -1032,12 +1019,15 @@ async function serial_open_and_start_reading()
     {
       {
         sent_command("mlx\n");
-        sleep(100).then(() => {
+        sleep(10).then(() => {
           sent_command("bi\n");
-          sleep(100).then(() => {
+          sleep(10).then(() => {
             sent_command("fv\n");
-            sleep(100).then(() => {
+            sleep(10).then(() => {
               sent_command("ls\n");
+              sleep(10).then(() => {
+                sent_command("ch\n");
+              });
             });
           });
         });
@@ -1166,6 +1156,11 @@ function button_action(but)
   {
     sent_command($(but).data("cmd") + ":" + sa + "\n");
   }
+  sleep(100).then(() => {
+    $(but).one('click', function () {
+      button_action(but);
+    });
+  });
 }
 
 function checkbox_slave_enable(chkbox)
