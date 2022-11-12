@@ -155,6 +155,12 @@ $(document).ready(function () {
   $("button.button.cmd").one('click', function () {
     button_action(this);
   });
+  // update i2c frequency at the master (Configure Hub, ch)
+  $('select.combo_i2c_freq').on('change', function() {
+    $('select.combo_i2c_freq').val(this.value);
+    sent_command("+ch:I2C_FREQ="+this.value+"\n");
+  });
+
   if (!("serial" in navigator)) {
     // The Web Serial API is NOT supported.
     $('button').prop('disabled', true); // disable all buttons!
@@ -703,7 +709,26 @@ $(document).ready(function () {
     }
   }, false);
 
-
+  // listener to update userinterface with current configuration of the hub
+  div.addEventListener('receive_line', (e) => {
+    let line = e.detail;
+    if (line.startsWith ("ch:"))
+    { // index slave
+      let tmp = line.split(":");
+      // ch:FORMAT=DEC(0)
+      // ch:I2C_FREQ=400kHz(1)
+      let key_value = tmp[1].split('=');
+      if (key_value[0] == 'I2C_FREQ')
+      {
+        let index = Number(key_value[1].split(/[\(\)]/)[1]);
+        let value = ["F100k", "F400k", "F1M", "F50k", "F20k", "F10k"][index];
+        if (value !== undefined)
+        {
+          $('select.combo_i2c_freq').val(value);
+        }
+      }
+    }
+  }, false);
 
   // listener to update slave list
   div.addEventListener('receive_line', (e) => {
@@ -946,14 +971,6 @@ $(document).ready(function () {
 
   transient_chart.options.animation.duration = 0;
   transient_chart.options.scales.x.ticks.count = 8;
-
-  // update i2c frequency at the master (Configure Hub, ch)
-  $('select.combo_i2c_freq').on('change', function() {
-    $('select.combo_i2c_freq').val(this.value);
-    sent_command("+ch:I2C_FREQ="+this.value+"\n");
-  });
-
-
 });
 
 
@@ -1024,9 +1041,9 @@ async function serial_open_and_start_reading()
           sleep(10).then(() => {
             sent_command("fv\n");
             sleep(10).then(() => {
-              sent_command("ls\n");
+              sent_command("ch\n");
               sleep(10).then(() => {
-                sent_command("ch\n");
+                sent_command("ls\n");
               });
             });
           });
