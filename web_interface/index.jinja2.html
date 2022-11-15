@@ -11,7 +11,7 @@ Events in Javascript: https://developer.mozilla.org/en-US/docs/Web/Events/Creati
   <meta name="keywords" content="melexis, mlx, i2c, sensors, i2c master, interface, demo, evaluation"/>
   <meta name="description" content="Demo USB stick for Melexis I2C products at 3.3V supply voltage."/>
   <title>Melexis I2C Stick</title>
-  <link rel="stylesheet" href="interface.css">
+  <link rel="stylesheet" href="interface.min.css">
   <link rel="icon" type="image/x-icon" href="assets/site/favicon.ico">
 </head>
 <body>
@@ -255,101 +255,6 @@ Events in Javascript: https://developer.mozilla.org/en-US/docs/Web/Events/Creati
 </body>
 <script type="text/javascript" src="./assets/site/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="./assets/site/chart.min.js"></script>
-<script type="text/javascript" src="./interface.js"></script>
-
-<script type="text/javascript">
-
-function set_terminal_height()
-{
-  setTimeout(function() {
-    let total_height = $(window).height();
-    let height1 = $("#serial_send").outerHeight();
-    let height2 = $("nav.nav").outerHeight();
-    let height3 = $("nav.tabs").outerHeight();
-    let new_height = total_height - height1 - height2 - height3;
-    $("main#log").height(new_height);
-  }, 100);
-}
-
-function set_transient_chart_height()
-{
-  setTimeout(function() {
-    let total_height = $(window).height();
-    let height1 = $("nav.nav").outerHeight();
-    let height2 = $("nav.tabs").outerHeight();
-    let new_height = total_height - height1 - height2 - 10;
-    $("div#div_transient_chart").height(new_height);
-
-  }, 100);
-}
-
-
-function set_spatial_chart_height()
-{
-  setTimeout(function() {
-    let total_height = $(window).height();
-    let height1 = $("nav.nav").outerHeight();
-    let height2 = $("nav.tabs").outerHeight();
-    let new_height = total_height - height1 - height2 - 10;
-    let new_width = $("div#div_spatial_chart").innerWidth();
-    $("div#div_spatial_chart").height(new_height);
-    $("canvas#spatial_chart").prop('height', new_height);
-    $("canvas#spatial_chart").prop('width', new_width);
-    heat_map(10, 45);
-  }, 100);
-}
-
-
-
-
-$(window).resize(function() {
-  $("div#main").css("margin-top", "" + $("nav.nav").height() +"px");
-  set_terminal_height();
-  set_transient_chart_height();
-  set_spatial_chart_height();
-});
-
-
-$(document).ready(function () {
-  $("div#main").css("margin-top", "" + $("nav.nav").height() +"px");
-
-  $(".checkmark.default_off").prop('checked', false);
-
-  $("nav.nav div.tabs>a").click(function() {
-    set_terminal_height();
-    set_transient_chart_height();
-    set_spatial_chart_height();
-    $("div.tabs>a").removeClass("active");
-    $(this).addClass("active");
-    $("div.tabs>div").removeClass("active");
-    $("div.tabs>div#" + $(this).attr('id')).addClass("active");
-  });
-
-  $("#btn_open_port").click(function () {
-    $("div.tabs>a#tab_interface").trigger("click");
-    set_terminal_height();
-    set_transient_chart_height()
-    set_spatial_chart_height();
-  });
-  $("#btn_close_port").click(function () {
-    $("div.tabs>a#tab_interface").trigger("click");
-    set_terminal_height();
-    set_transient_chart_height();
-    set_spatial_chart_height();
-  });
-
-  $("nav.tabs>a").click(function() {
-    set_terminal_height();
-    set_transient_chart_height();
-    set_spatial_chart_height();
-    $(this).siblings().removeClass("active");
-    $(this).addClass("active");
-    $(this).parent().siblings("div.my_tab").removeClass("active");
-    $(this).parent().siblings("div.my_tab#"+ $(this).attr('id')).addClass("active");
-  });
-
-});
-
-</script>
+<script type="text/javascript" src="./interface.min.js"></script>
 
 </html>

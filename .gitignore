@@ -4,3 +4,7 @@ web_interface/*.html
 !web_interface/index.jinja2.html
 !web_interface/google*.html
 /firmware_list.md
+*.min.js
+*.min.css
+!web_interface/assets/**/*.min.js
+!web_interface/assets/**/*.min.css

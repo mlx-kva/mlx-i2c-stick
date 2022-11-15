@@ -11,8 +11,8 @@ DIST_FILES=		   \
 	assets/mlx-i2c-stick-overview.webp  \
 	google*.html            \
 	index.html              \
-	interface.css           \
-	interface.js
+	interface.min.css       \
+	interface.min.js
 
 PANDOC_FILES=               \
 	products                \
@@ -27,13 +27,21 @@ all: ${DIST_FILES} dist
 clean:
 	@rm -rfv ${DIST_DIR}
 	@rm -fv $(patsubst %, %.html, ${PANDOC_FILES})
-	@rm -fv index.html
+	@rm -fv index.html interface.min.js interface.min.css 
 
 dist:
 	@mkdir -p ${DIST_DIR}/assets/site
 	for file in $(DIST_FILES); do \
 		cp -vrf $$file ${DIST_DIR}/$$file; \
 	done
+
+interface.min.js: interface.js
+	@echo "minifying $< => $@"
+	@terser $< --compress --mangle --toplevel --output $@
+
+interface.min.css: interface.css
+	@echo "minifying $< => $@"
+	@cssnano $< $@
 
 products.html: products.md
 	@echo "pandoc $< => $@"

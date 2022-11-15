@@ -8,27 +8,121 @@ const mlx_charcoal_grey = "#3e4242";
 
 const color_palette = [mlx_electric_green, mlx_coral_red, mlx_gold_yellow, mlx_royal_blue, mlx_steel_grey, "#e60049", "#0bb4ff", "#50e991", "#e6d800", "#9b19f5", "#ffa300", "#dc0ab4", "#b3d4ff", "#00bfa0"];
 
-let has_serial = false;
-let serial = null;
-let accepted_ports = [{usbProductId: 33033, usbVendorId: 9114},
+var has_serial = false;
+var serial = null;
+var accepted_ports = [{usbProductId: 33033, usbVendorId: 9114},
                       {usbProductId: 33033, usbVendorId: 11914}
                      ];
-let selected_port = accepted_ports[1];
+var selected_port = accepted_ports[1];
 
-let keep_reading = true;
-let reader;
-let writer;
-let closed_promise;
+var keep_reading = true;
+var reader;
+var writer;
+var closed_promise;
 var enc = new TextEncoder(); // always utf-8
 var dec = new TextDecoder("utf-8");
-let transient_chart = null;
+var transient_chart = null;
 var receive_buffer = "";
 var t_min = 15;
 var t_max = 35;
 var spatial_previous_orientation = 0;
 
 var connected_slaves = {};
-let heat_map_gradient_colors = null;
+var heat_map_gradient_colors = null;
+
+
+function set_terminal_height()
+{
+  setTimeout(function() {
+    let total_height = $(window).height();
+    let height1 = $("#serial_send").outerHeight();
+    let height2 = $("nav.nav").outerHeight();
+    let height3 = $("nav.tabs").outerHeight();
+    let new_height = total_height - height1 - height2 - height3;
+    $("main#log").height(new_height);
+  }, 100);
+}
+
+function set_transient_chart_height()
+{
+  setTimeout(function() {
+    let total_height = $(window).height();
+    let height1 = $("nav.nav").outerHeight();
+    let height2 = $("nav.tabs").outerHeight();
+    let new_height = total_height - height1 - height2 - 10;
+    $("div#div_transient_chart").height(new_height);
+
+  }, 100);
+}
+
+
+function set_spatial_chart_height()
+{
+  setTimeout(function() {
+    let total_height = $(window).height();
+    let height1 = $("nav.nav").outerHeight();
+    let height2 = $("nav.tabs").outerHeight();
+    let new_height = total_height - height1 - height2 - 10;
+    let new_width = $("div#div_spatial_chart").innerWidth();
+    $("div#div_spatial_chart").height(new_height);
+    $("canvas#spatial_chart").prop('height', new_height);
+    $("canvas#spatial_chart").prop('width', new_width);
+    heat_map(10, 45);
+  }, 100);
+}
+
+
+
+
+$(window).resize(function() {
+  $("div#main").css("margin-top", "" + $("nav.nav").height() +"px");
+  set_terminal_height();
+  set_transient_chart_height();
+  set_spatial_chart_height();
+});
+
+
+$(document).ready(function () {
+  $("div#main").css("margin-top", "" + $("nav.nav").height() +"px");
+
+  $(".checkmark.default_off").prop('checked', false);
+
+  $("nav.nav div.tabs>a").click(function() {
+    set_terminal_height();
+    set_transient_chart_height();
+    set_spatial_chart_height();
+    $("div.tabs>a").removeClass("active");
+    $(this).addClass("active");
+    $("div.tabs>div").removeClass("active");
+    $("div.tabs>div#" + $(this).attr('id')).addClass("active");
+  });
+
+  $("#btn_open_port").click(function () {
+    $("div.tabs>a#tab_interface").trigger("click");
+    set_terminal_height();
+    set_transient_chart_height()
+    set_spatial_chart_height();
+  });
+  $("#btn_close_port").click(function () {
+    $("div.tabs>a#tab_interface").trigger("click");
+    set_terminal_height();
+    set_transient_chart_height();
+    set_spatial_chart_height();
+  });
+
+  $("nav.tabs>a").click(function() {
+    set_terminal_height();
+    set_transient_chart_height();
+    set_spatial_chart_height();
+    $(this).siblings().removeClass("active");
+    $(this).addClass("active");
+    $(this).parent().siblings("div.my_tab").removeClass("active");
+    $(this).parent().siblings("div.my_tab#"+ $(this).attr('id')).addClass("active");
+  });
+
+});
+
+
 
 function get_date_time() {
         var now     = new Date(); 
