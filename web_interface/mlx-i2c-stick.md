@@ -33,7 +33,7 @@ We provide open source firmware and an userinterface to easily get started with 
 
 ## The hardware
 
-### Public off-the-shelve Hardware
+### Public off-the-shelf Hardware
 
 - RP2040 MCU: https://www.adafruit.com/product/5056
 - QWIIC Cable: https://www.sparkfun.com/products/17258
