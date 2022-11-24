@@ -36,22 +36,22 @@ function set_terminal_height()
   setTimeout(function() {
     let total_height = $(window).height();
     let height1 = $("#serial_send").outerHeight();
-    let height2 = $("nav.nav").outerHeight();
-    let height3 = $("nav.tabs").outerHeight();
+    let height2 = $("nav.navbar").outerHeight();
+    let height3 = $("div#tab_interface > div.tabs").outerHeight();
     let new_height = total_height - height1 - height2 - height3;
     $("main#log").height(new_height);
   }, 100);
 }
 
+
 function set_transient_chart_height()
 {
   setTimeout(function() {
     let total_height = $(window).height();
-    let height1 = $("nav.nav").outerHeight();
-    let height2 = $("nav.tabs").outerHeight();
+    let height1 = $("nav.navbar").outerHeight();
+    let height2 = $("div#tab_interface > div.tabs").outerHeight();
     let new_height = total_height - height1 - height2 - 10;
     $("div#div_transient_chart").height(new_height);
-
   }, 100);
 }
 
@@ -60,8 +60,8 @@ function set_spatial_chart_height()
 {
   setTimeout(function() {
     let total_height = $(window).height();
-    let height1 = $("nav.nav").outerHeight();
-    let height2 = $("nav.tabs").outerHeight();
+    let height1 = $("nav.navbar").outerHeight();
+    let height2 = $("div#tab_interface > div.tabs").outerHeight();
     let new_height = total_height - height1 - height2 - 10;
     let new_width = $("div#div_spatial_chart").innerWidth();
     $("div#div_spatial_chart").height(new_height);
@@ -72,10 +72,8 @@ function set_spatial_chart_height()
 }
 
 
-
-
 $(window).resize(function() {
-  $("div#main").css("margin-top", "" + $("nav.nav").height() +"px");
+  // $("div#main").css("margin-top", "" + $("nav.nav").height() +"px");
   set_terminal_height();
   set_transient_chart_height();
   set_spatial_chart_height();
@@ -83,26 +81,34 @@ $(window).resize(function() {
 
 
 $(document).ready(function () {
-  $("div#main").css("margin-top", "" + $("nav.nav").height() +"px");
-
   $(".checkmark.default_off").prop('checked', false);
 
-  $("nav.nav div.tabs>a").click(function() {
+  // navbar main buttons-clicks
+  $("nav.navbar > div.navbar-menu > div.navbar-start > a.navbar-item").click(function() {
     set_terminal_height();
     set_transient_chart_height();
     set_spatial_chart_height();
-    $("div.tabs>a").removeClass("active");
-    $(this).addClass("active");
-    $("div.tabs>div").removeClass("active");
-    $("div.tabs>div#" + $(this).attr('id')).addClass("active");
+
+    $(this).siblings().removeClass("is-active");
+    $(this).addClass("is-active");
+    $("div#tabs_main > div").removeClass("is-active");
+    $("div#tabs_main > div#"+ $(this).attr('id')).addClass("is-active");
   });
 
   $("#btn_open_port").click(function () {
-    $("div.tabs>a#tab_interface").trigger("click");
+    $("div.navbar-start>a#tab_interface").trigger("click");
     set_terminal_height();
     set_transient_chart_height()
     set_spatial_chart_height();
   });
+  // $("#btn_trial").click(function () {
+  //   $("#trial").toggle();
+  //   $("#main_tabs").toggle();
+  // });
+  // $("#btn_trial2").click(function () {
+  //   $("#trial").toggle();
+  //   $("#main_tabs").toggle();
+  // });
   $("#btn_close_port").click(function () {
     $("div.tabs>a#tab_interface").trigger("click");
     set_terminal_height();
@@ -110,14 +116,14 @@ $(document).ready(function () {
     set_spatial_chart_height();
   });
 
-  $("nav.tabs>a").click(function() {
+  $("div.tabs>ul>li").click(function() {
     set_terminal_height();
     set_transient_chart_height();
     set_spatial_chart_height();
-    $(this).siblings().removeClass("active");
-    $(this).addClass("active");
-    $(this).parent().siblings("div.my_tab").removeClass("active");
-    $(this).parent().siblings("div.my_tab#"+ $(this).attr('id')).addClass("active");
+    $(this).siblings().removeClass("is-active");
+    $(this).addClass("is-active");
+    $(this).parent().parent().siblings("div.tab_content").removeClass("is-active");
+    $(this).parent().parent().siblings("div.tab_content#"+ $(this).attr('id')).addClass("is-active");
   });
 
 });
@@ -241,7 +247,7 @@ function sent_command(command)
 
 
 $(document).ready(function () {
-  $("#serial_terminal").text("");
+  $("#serial_terminal").html("<br>");
   $('#serial_terminal').prop('readonly', true);
   $("#serial_send").text("");
   $("#serial_send").prop('disabled', true); // disable input entry!
@@ -258,76 +264,74 @@ $(document).ready(function () {
   if (!("serial" in navigator)) {
     // The Web Serial API is NOT supported.
     $('button').prop('disabled', true); // disable all buttons!
-    $("#serial_terminal").append('<pre>==> This page uses "Web Serial API".\n</pre>');
-    $("#serial_terminal").append('<pre>https://developer.mozilla.org/en-US/docs/Web/API/Web_Serial_API\n</pre>');
-    $("#serial_terminal").append('<pre> \n</pre>');
-    $("#serial_terminal").append('<pre>Your browser/OS does NOT support the serial port!\n</pre>');
-    $("#serial_terminal").append('<pre>Please use browser:\n</pre>');
-    $("#serial_terminal").append('<pre> - Chrome\n</pre>');
-    $("#serial_terminal").append('<pre> - Edge\n</pre>');
-    $("#serial_terminal").append('<pre> - Opera\n</pre>');
-    $("#serial_terminal").append('<pre>with an operating system:\n</pre>');
-    $("#serial_terminal").append('<pre> - Linux\n</pre>');
-    $("#serial_terminal").append('<pre> - ChromeOS\n</pre>');
-    $("#serial_terminal").append('<pre> - macOS\n</pre>');
-    $("#serial_terminal").append('<pre> - Windows 10+\n</pre>');
+    $("#serial_terminal").append('<pre>==> This page uses "Web Serial API".</pre><br>');
+    $("#serial_terminal").append('<pre>https://developer.mozilla.org/en-US/docs/Web/API/Web_Serial_API</pre><br>');
+    $("#serial_terminal").append('<pre> </pre><br>');
+    $("#serial_terminal").append('<pre>Your browser/OS does NOT support the serial port!</pre><br>');
+    $("#serial_terminal").append('<pre>Please use browser:</pre><br>');
+    $("#serial_terminal").append('<pre> - Chrome</pre><br>');
+    $("#serial_terminal").append('<pre> - Edge</pre><br>');
+    $("#serial_terminal").append('<pre> - Opera</pre><br>');
+    $("#serial_terminal").append('<pre>with an operating system:</pre><br>');
+    $("#serial_terminal").append('<pre> - Linux</pre><br>');
+    $("#serial_terminal").append('<pre> - ChromeOS</pre><br>');
+    $("#serial_terminal").append('<pre> - macOS</pre><br>');
+    $("#serial_terminal").append('<pre> - Windows 10+</pre><br>');
     return;
   }
   has_serial = true;
   $("#lbl_selected_port").text(selected_port.usbVendorId + '/' + selected_port.usbProductId);
 
-
-
-
   div = document.querySelector('#receive_data');
 
   // show receiving data in terminal...
   div.addEventListener('receive', (e) => { 
-    var value_str = dec.decode(e.detail);
-    last_char_is_new_line = false;
-    if (value_str.slice(-1) === '\n')
-    {
-      last_char_is_new_line = true;
-    }
-    dt = get_date_time();
+    var value_str = dec.decode(e.detail).replaceAll('\r', '');
+    let dt = get_date_time();
     if (!($("#chk_add_datetime").is(":checked")))
     {
       dt = '';
     }
 
-    value_str = value_str.replaceAll('\r', ''); // remove \r
+    let values = value_str.split("\n");
 
-    value_str = value_str.replaceAll('\n', '\n'+dt+' -> ');
-    if (last_char_is_new_line)
+    let has_line_ending = false;
+    if (values[values.length-1] === '')
     {
-      value_str = value_str.slice(0, -4-dt.length);
+      has_line_ending = true;
+      values.pop();
     }
 
+    let term = $("#serial_terminal");
 
-    prefix = '';
-    if (['\n', ''].includes($("#serial_terminal").text().slice(-1)))
+    let term_html = term.html();
+    if (term_html.length > 50000)
     {
-      prefix = dt+' -> ';
+      let last_part = term_html.split("<br>").slice(-1);
+      if (last_part === '')
+      {
+        term.empty();
+        term.append("<br>");
+      } else
+      {
+        term.html(last_part);
+      }
+      term_html = term.html();
+    }
+    if (term.html().endsWith("<br>"))
+    {
+      term.append("<pre>"+dt+' -> </pre>');
+    }
+    term.append("<pre>" + values.join("</pre><br><pre>"+dt+' -> ') + "</pre>");
+    if (has_line_ending)
+    {
+      term.append("<br>");
     }
 
-    if ($("#serial_terminal").html().length > 50000)
-    {
-      $("#serial_terminal").empty(); 
-    }
-
-    if (value_str == "\n")
-    {
-      value_str = " \n";
-    }
-
-    $("#serial_terminal").append("<pre>" + prefix + value_str + "</pre>");
     if ($("#chk_auto_scroll").is(":checked"))
     {
-      $("#serial_terminal").scrollTop($("#serial_terminal")[0].scrollHeight);
+      term.scrollTop(term[0].scrollHeight);
     }
-
-
-
   }, false);
 
   // listener to generate recieve_line events.
@@ -533,7 +537,7 @@ $(document).ready(function () {
   // spatial chart updater
   div.addEventListener('receive_line', (e) => { 
     if ($("#chk_spatial_enable").is(":checked") &&
-        $("#tab_int_spatial").hasClass("active")
+        $("#tab_int_spatial").hasClass("is-active")
        )
     {
       let line = e.detail;
@@ -988,13 +992,12 @@ $(document).ready(function () {
 
   div = document.querySelector('#sent_data');
   div.addEventListener('sent', async (e) => { 
-    var value_str = e.detail;
+    let value_str = e.detail;
     if (value_str.length === 1)
     {
       value_str += '\n'; 
     }
-    var value_byte = enc.encode(value_str);
-
+    let value_byte = enc.encode(value_str);
 
     dt = get_date_time();
     if (!($("#chk_add_datetime").is(":checked")))
@@ -1002,18 +1005,17 @@ $(document).ready(function () {
       dt = '';
     }
 
-    prefix = '';
-    if (['\n', ''].includes($("#serial_terminal").text().slice(-1)))
+    let term = $("#serial_terminal");
+
+    if (!(term.html().endsWith("<br>")))
     {
-      prefix = dt+' <- ';
-    } else
-    {
-      prefix = " \n" + dt+' <- ';
+      term.append("<br>");
     }
-    $("#serial_terminal").append("<pre>" + prefix + value_str + "</pre>");
+
+    term.append("<pre>" + dt + ' <- ' + value_str.replaceAll('\n','') + "</pre><br>");
     if ($("#chk_auto_scroll").is(":checked"))
     {
-      $("#serial_terminal").scrollTop($("#serial_terminal")[0].scrollHeight);
+      term.scrollTop(term[0].scrollHeight);
     }
     
     await writer.write(value_byte);
@@ -1022,7 +1024,7 @@ $(document).ready(function () {
 
   // reset the connected_slave container when we detect a scan or ls command.
   div.addEventListener('sent', async (e) => { 
-    var value_str = e.detail;
+    let value_str = e.detail;
     if (['5', 'scan\n', '5\n', 'ls\n'].includes(value_str))
     {
       connected_slaves = {};
@@ -1080,16 +1082,19 @@ async function serial_open_and_start_reading()
     {
       dt = '';
     }
-    prefix = '';
-    if (['\n', ''].includes($("#serial_terminal").text().slice(-1)))
+
+    let term = $("#serial_terminal");
+
+    if (!(term.html().endsWith("<br>")))
     {
-      prefix = dt+' ## ';
+      term.append("<br>");
     }
-    value_str = prefix + "[connected] " + '\n';
-    $("#serial_terminal").append("<pre>" + value_str + "</pre>");
+
+    term.append("<pre>"+dt+" ## </pre>" + "<pre>" + "[connected]" + "</pre><br>")
+
     if ($("#chk_auto_scroll").is(":checked"))
     {
-      $("#serial_terminal").scrollTop($("#serial_terminal")[0].scrollHeight);
+      term.scrollTop(term[0].scrollHeight);
     }
 
   } catch (error)
@@ -1103,16 +1108,19 @@ async function serial_open_and_start_reading()
     {
       dt = '';
     }
-    prefix = '';
-    if (['\n', ''].includes($("#serial_terminal").text().slice(-1)))
+
+    let term = $("#serial_terminal");
+
+    if (!(term.html().endsWith("<br>")))
     {
-      prefix = dt+' ## ';
+      term.append("<br>");
     }
-    value_str = prefix + "[disconnected] " + error.toString() + '\n';
-    $("#serial_terminal").append("<pre>" + value_str + "</pre>");
+
+    term.append("<pre>"+dt+" ## </pre>" + "<pre>" + "[disconnected] " + error.toString() + "</pre><br>")
+
     if ($("#chk_auto_scroll").is(":checked"))
     {
-      $("#serial_terminal").scrollTop($("#serial_terminal")[0].scrollHeight);
+      term.scrollTop(term[0].scrollHeight);
     }
     serial = null;
     return;
@@ -1165,18 +1173,21 @@ async function serial_open_and_start_reading()
       {
         dt = '';
       }
-      prefix = '';
-      if (['\n', ''].includes($("#serial_terminal").text().slice(-1)))
+
+
+      let term = $("#serial_terminal");
+
+      if (!(term.html().endsWith("<br>")))
       {
-        prefix = dt+' ## ';
-      }
-      value_str = prefix + "[disconnected] " + error.toString() + '\n';
-      $("#serial_terminal").append("<pre>" + value_str + "</pre>");
-      if ($("#chk_auto_scroll").is(":checked"))
-      {
-        $("#serial_terminal").scrollTop($("#serial_terminal")[0].scrollHeight);
+        term.append("<br>");
       }
 
+      term.append("<pre>"+dt+" ## </pre>" + "<pre>" + "[disconnected] " + error.toString() + "</pre><br>")
+
+      if ($("#chk_auto_scroll").is(":checked"))
+      {
+        term.scrollTop(term[0].scrollHeight);
+      }
     } finally {
       // Allow the serial port to be closed later.
       reader.releaseLock();

@@ -11,7 +11,7 @@ DIST_FILES=		   \
 	assets/mlx-i2c-stick-overview.webp  \
 	google*.html            \
 	index.html              \
-	interface.min.css       \
+	mlx-bulma.min.css       \
 	interface.min.js
 
 PANDOC_FILES=               \
@@ -27,7 +27,10 @@ all: ${DIST_FILES} dist
 clean:
 	@rm -rfv ${DIST_DIR}
 	@rm -fv $(patsubst %, %.html, ${PANDOC_FILES})
-	@rm -fv index.html interface.min.js interface.min.css 
+	@rm -fv index.html interface.min.js mlx-bulma.min.css mlx-bulma.css 
+
+cleaner: clean
+	@rm -rf theme/node_modules
 
 dist:
 	@mkdir -p ${DIST_DIR}/assets/site
@@ -39,7 +42,15 @@ interface.min.js: interface.js
 	@echo "minifying $< => $@"
 	@terser $< --compress --mangle --toplevel --output $@
 
-interface.min.css: interface.css
+theme/node_modules: theme/package.json
+	@echo "installing the bulma tools"
+	cd theme && npm install
+
+mlx-bulma.css: theme/sass/mlx-bulma.scss theme/node_modules
+	@echo "generating $< => $@"
+	cd theme && npm run css-build
+
+mlx-bulma.min.css: mlx-bulma.css
 	@echo "minifying $< => $@"
 	@cssnano $< $@
 

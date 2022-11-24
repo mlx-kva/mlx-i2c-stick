@@ -8,3 +8,4 @@ web_interface/*.html
 *.min.css
 !web_interface/assets/**/*.min.js
 !web_interface/assets/**/*.min.css
+web_interface/mlx-bulma.css

@@ -1,2 +1,7 @@
 versioning:
   web_interface: Nov 2022
+  firmware: V1.1.0
+
+
+drivers:
+  - !include mlx90632_interface.yml

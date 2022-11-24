@@ -1,0 +1,17 @@
+{
+  "name": "mlx-i2c-stick-interface",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sass/mlx-bulma.scss",
+  "scripts": {
+    "css-build": "node-sass --omit-source-map-url sass/mlx-bulma.scss ../mlx-bulma.css",
+    "css-watch": "npm run css-build -- --watch",
+    "start": "npm run css-watch"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "bulma": "^0.9.4",
+    "node-sass": "^8.0.0"
+  }
+}
