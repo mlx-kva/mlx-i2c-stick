@@ -35,7 +35,7 @@ jobs:
       - name: Install terser
         run: sudo npm install terser --global
       - name: Install python dependencies
-        run: sudo pip install -r requirements.txt
+        run: sudo pip install -r web_interface/requirements.txt
       - name: Install arduino-cli
         run: |
           mkdir -p ~/.local/bin
