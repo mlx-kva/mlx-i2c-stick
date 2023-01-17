@@ -48,4 +48,3 @@ https://www.digikey.com/en/products/detail/mill-max-manufacturing-corp/917-43-10
 PCB to sensor spacer:  
 https://www.digikey.com/en/products/detail/bivar-inc/514-070/3096249  
 https://www.digikey.com/en/products/detail/assmann-wsw-components/V4555/3511514  
-
